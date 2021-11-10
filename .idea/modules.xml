@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/TP_SQLITE_POLSHU.iml" filepath="$PROJECT_DIR$/.idea/TP_SQLITE_POLSHU.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TP_SQLITE_POLSHU.iml" filepath="$PROJECT_DIR$/.idea/modules/TP_SQLITE_POLSHU.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/TP_SQLITE_POLSHU.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/TP_SQLITE_POLSHU.app.iml" />
     </modules>
   </component>
 </project>
