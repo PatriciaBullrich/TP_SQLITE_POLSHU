@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.marto.tp_sqlite_polshu.Helpers.CustomLog;
@@ -27,6 +28,7 @@ public class ListadoFragment extends BaseFragment implements BasicMethods{
         ListView lv_noticias;
         ArrayList<Noticia> noticias = new ArrayList<>();
         NoticiasService service;
+        Button btn_noticia;
 
 
     public ListadoFragment() {
@@ -40,9 +42,11 @@ public class ListadoFragment extends BaseFragment implements BasicMethods{
             service =   new NoticiasService(main);
             noticias = service.getALl();
             lv_noticias = (ListView) rootlayout.findViewById(R.id.gone); // falta xml
+            btn_noticia = (Button) rootlayout.findViewById(R.id.gone); // falta xml
             llenarListView();
         }
     }
+    View.OnClickListener btn_noticia_click = v -> main.irAInsert();
 
     private void llenarListView(){
         ArrayAdapter<String> adapter = new ArrayAdapter<>(main, android.R.layout.simple_list_item_1,adaptarLista());
@@ -68,6 +72,7 @@ public class ListadoFragment extends BaseFragment implements BasicMethods{
             main.llenarDetalle(noticias.get(position));
             main.irADetalle();
         });
+        btn_noticia.setOnClickListener(btn_noticia_click);
     }
 
     @Override
