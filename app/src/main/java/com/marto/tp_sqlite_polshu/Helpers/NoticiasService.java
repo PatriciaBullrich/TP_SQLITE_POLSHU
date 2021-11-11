@@ -27,7 +27,7 @@ public class NoticiasService {
 
     public static ContentValues insertarNoticia (Noticia n){
         ContentValues values = new ContentValues();
-        values.put(KEY_NOTICIAS_ID, n.getId());
+        if(n.getId() >=0) values.put(KEY_NOTICIAS_ID, n.getId());
         values.put(KEY_NOTICIAS_NOMBRE, n.getNombre());
         values.put(KEY_NOTICIAS_DESC, n.getDescripcion());
         values.put(KEY_NOTICIAS_FECHA, n.getFecha());
@@ -37,7 +37,7 @@ public class NoticiasService {
 
     public static final String CREAR_TABLA = "CREATE TABLE " + NOMBRE_TABLA +
             "(" +
-            KEY_NOTICIAS_ID + " INTEGER PRIMARY KEY," + // Define a primary key
+            KEY_NOTICIAS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + // Define a primary key
             KEY_NOTICIAS_NOMBRE + " TEXT " +
             KEY_NOTICIAS_DESC + " TEXT" +
             KEY_NOTICIAS_FECHA +  "INTEGER" +
@@ -49,7 +49,7 @@ public class NoticiasService {
         SQLiteDatabase db;
         Cursor cursor;
         db = _helper.getReadableDatabase();
-        cursor = db.rawQuery("SELECT * FROM " + NOMBRE_TABLA, null);
+        cursor = db.rawQuery("SELECT * FROM " + NOMBRE_TABLA + " ORDER BY " + KEY_NOTICIAS_FECHA, null);
         if(cursor != null) {
             while (cursor.moveToNext()) {
                 lista.add(cursorToEntity(cursor));
@@ -64,7 +64,7 @@ public class NoticiasService {
         SQLiteDatabase db;
         Cursor c;
         db = _helper.getReadableDatabase();
-        c = db.rawQuery("SELECT Usuarios.nombre AS autor FROM Noticias WHERE Noticias.IDusuario= ? \n INNER JOIN Usuarios ON Noticias.IdUsuario = Usuarios.Id", new String[]{String.valueOf(id)});
+        c = db.rawQuery("SELECT Usuarios.nombre AS autor FROM Noticias INNER JOIN Usuarios ON Noticias.IdUsuario = Usuarios.Id WHERE Noticias.IDusuario=? ", new String[]{String.valueOf(id)});
         if(c != null){
             while (c.moveToFirst()){
                 autor = c.getString(c.getColumnIndex("autor"));
@@ -73,6 +73,7 @@ public class NoticiasService {
         }
         return autor;
     }
+
 
     public static Noticia cursorToEntity(Cursor c){
         Noticia aux = null;

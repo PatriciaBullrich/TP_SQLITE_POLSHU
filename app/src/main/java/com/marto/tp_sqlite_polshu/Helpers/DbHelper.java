@@ -17,7 +17,7 @@ public class DbHelper extends SQLiteOpenHelper {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
-    private void insertarNoticia(SQLiteDatabase db, Noticia n){
+    public void insertarNoticia(SQLiteDatabase db, Noticia n){
         ContentValues values = NoticiasService.insertarNoticia(n);
         db.insert(NoticiasService.NOMBRE_TABLA, null, values);
     }
