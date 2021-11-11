@@ -13,6 +13,7 @@ import android.widget.ListView;
 
 import com.marto.tp_sqlite_polshu.Helpers.CustomLog;
 import com.marto.tp_sqlite_polshu.Helpers.NoticiasService;
+import com.marto.tp_sqlite_polshu.Helpers.ParseHelper;
 import com.marto.tp_sqlite_polshu.model.Noticia;
 
 import java.text.SimpleDateFormat;
@@ -54,25 +55,11 @@ public class ListadoFragment extends BaseFragment implements BasicMethods{
             for (Noticia n:
                     noticias) {
                 String autor = service.findAutor(n.getId());
-                String formato = String.format("Tiulo: %s autor: %s + fecha: %s", n.getNombre(), autor, integerToDate(n.getFecha()));
+                String formato = String.format("Tiulo: %s autor: %s + fecha: %s", n.getNombre(), autor, ParseHelper.integerToDate(n.getFecha()));
                 lista.add(formato);
             }
         }
         return lista;
-    }
-
-    private String integerToDate(int n){
-        try {
-            SimpleDateFormat originalFormat = new SimpleDateFormat("yyyyMMdd");
-            Date date = originalFormat.parse(String.valueOf(n));
-            SimpleDateFormat nuevoFormato = new SimpleDateFormat("yyyy-MM-dd");
-            String fechaFormateaada = nuevoFormato.format(date);
-            return fechaFormateaada;
-        }
-        catch (Exception ex){
-            CustomLog.logException(ex);
-        }
-        return null;
     }
 
     @Override

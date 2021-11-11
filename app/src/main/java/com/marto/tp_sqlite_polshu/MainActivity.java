@@ -12,17 +12,20 @@ import com.marto.tp_sqlite_polshu.model.Session;
 
 public class MainActivity extends BaseActivity {
     public static final int ITEM_LOGOUT = R.id.action_logout;
+    public static final int ITEM_PEERFIL = R.id.action_perfil;
 
     InsertarFragment frg_insertar;
     DetalleNoticia frg_detalle;
     ListadoFragment frg_list;
     LoginFragment frg_login;
+    PerfilFragment frg_perfil;
 
     private void inicializar(){
         frg_detalle = new DetalleNoticia();
         frg_insertar = new InsertarFragment();
         frg_list = new ListadoFragment();
         frg_login = new LoginFragment();
+        frg_perfil = new PerfilFragment();
     }
 
     @Override
@@ -40,6 +43,7 @@ public class MainActivity extends BaseActivity {
     public void irALogin(){reemplazarFragment(frg_login);}
     public void irADetalle(){reemplazarFragment(frg_detalle);}
     public void irAListado(){reemplazarFragment(frg_list);}
+    public void irAPerfil(){reemplazarFragment(frg_perfil);}
 
     public void llenarDetalle(Noticia n){frg_detalle.llenarNoticia(n);}
 
@@ -56,6 +60,8 @@ public class MainActivity extends BaseActivity {
         switch (item.getItemId()){
             case ITEM_LOGOUT:
                 logout();
+            case ITEM_PEERFIL:
+                irAPerfil();
             default:
                 aux = false;
         }
