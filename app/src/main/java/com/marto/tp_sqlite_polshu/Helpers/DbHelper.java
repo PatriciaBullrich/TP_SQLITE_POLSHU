@@ -65,6 +65,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public void borrarNoticia(int id){
         this.getWritableDatabase().delete(NoticiasService.NOMBRE_TABLA,
                 NoticiasService.KEY_NOTICIAS_ID + "=" + id, null);
+        CustomLog.log("borrado con exito");
     }
 
 

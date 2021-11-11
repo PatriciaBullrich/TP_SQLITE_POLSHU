@@ -19,6 +19,12 @@ public class NoticiasService {
     public static final String KEY_NOTICIAS_FECHA= "Fecha";
     public static final String FOREIGN_KEY_NOTICIAS_IDusuario = "IdUsuario";
 
+    private final DbHelper _helper;
+    public NoticiasService(Context c){
+        _helper = new DbHelper(c);
+    }
+
+
     public static ContentValues insertarNoticia (Noticia n){
         ContentValues values = new ContentValues();
         values.put(KEY_NOTICIAS_ID, n.getId());
@@ -38,20 +44,35 @@ public class NoticiasService {
             FOREIGN_KEY_NOTICIAS_IDusuario + "INTEGER REFERENCES" + UsuariosService.NOMBRE_TABLA + "," +
         ")";
 
-    public static ArrayList<Noticia> getALl(Context c){
-        DbHelper helper = new DbHelper(c);
+    public ArrayList<Noticia> getALl(){
         ArrayList<Noticia> lista = new ArrayList<>();
         SQLiteDatabase db;
         Cursor cursor;
-        db = helper.getReadableDatabase();
+        db = _helper.getReadableDatabase();
         cursor = db.rawQuery("SELECT * FROM " + NOMBRE_TABLA, null);
-        if(cursor == null) CustomLog.log("el cursor me llego nulo");
-        while(cursor.moveToNext()){
-            lista.add(cursorToEntity(cursor));
+        if(cursor != null) {
+            while (cursor.moveToNext()) {
+                lista.add(cursorToEntity(cursor));
+            }
         }
         return lista;
     }
 
+
+    public String findAutor(int id){
+        String autor = null;
+        SQLiteDatabase db;
+        Cursor c;
+        db = _helper.getReadableDatabase();
+        c = db.rawQuery("SELECT Usuarios.nombre AS autor FROM Noticias WHERE Noticias.IDusuario= ? \n INNER JOIN Usuarios ON Noticias.IdUsuario = Usuarios.Id", new String[]{String.valueOf(id)});
+        if(c != null){
+            while (c.moveToFirst()){
+                autor = c.getString(c.getColumnIndex("autor"));
+            }
+            c.close();
+        }
+        return autor;
+    }
 
     public static Noticia cursorToEntity(Cursor c){
         Noticia aux = null;

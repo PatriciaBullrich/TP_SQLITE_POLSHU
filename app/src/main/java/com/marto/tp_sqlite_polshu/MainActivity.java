@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.marto.tp_sqlite_polshu.model.Noticia;
+import com.marto.tp_sqlite_polshu.model.Session;
 
 public class MainActivity extends BaseActivity {
     public static final int ITEM_LOGOUT = R.id.action_logout;
@@ -29,6 +30,9 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         inicializar();
+        if(!ReadPreferences("nombre", "string").equals("") && !ReadPreferences("contra","string").equals("")){
+            frg_login.silentLogin(ReadPreferences("nombre", "string").toString(), ReadPreferences("contra","string").toString());
+        }
         reemplazarFragment(frg_login, false);
     }
 
@@ -59,6 +63,9 @@ public class MainActivity extends BaseActivity {
     }
 
     private void logout() {
+        clearPreferences();
+        Session.currentUser = null;
+        irALogin();
     }
 
 }

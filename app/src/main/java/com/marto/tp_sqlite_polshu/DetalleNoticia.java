@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.marto.tp_sqlite_polshu.Helpers.AlertHelper;
+import com.marto.tp_sqlite_polshu.Helpers.DbHelper;
+import com.marto.tp_sqlite_polshu.Helpers.NoticiasService;
 import com.marto.tp_sqlite_polshu.model.Noticia;
 
 
@@ -19,7 +21,9 @@ public class DetalleNoticia extends Fragment {
     MainActivity main;
     TextView tv_titulo, tv_detalle;
     Noticia laNoticia;
+    DbHelper helper;
     Button btn_volver;
+    Button btn_borrar;
     public void llenarNoticia(Noticia n){
         if(n == null) AlertHelper.mostrarAlertaError(getContext(), "me llego una noticia nula");
         else laNoticia = n;
@@ -31,8 +35,15 @@ public class DetalleNoticia extends Fragment {
     }
 
     View.OnClickListener btn_volver_click = v -> main.irAListado();
+    View.OnClickListener btn_borrar_click = v -> {
+        helper.borrarNoticia(laNoticia.getId());
+        main.irAListado();
+    };
 
-    public void setearListeners(){btn_volver.setOnClickListener(btn_volver_click);}
+    public void setearListeners(){
+        btn_volver.setOnClickListener(btn_volver_click);
+        btn_borrar.setOnClickListener(btn_borrar_click);
+    }
 
 
     @Override
@@ -47,10 +58,12 @@ public class DetalleNoticia extends Fragment {
 
     private void inicializar() {
         main = (MainActivity) getActivity();
+        helper = new DbHelper(main);
         if (rootlayout != null && laNoticia != null){
             tv_titulo = (TextView) rootlayout.findViewById(R.id.tv_titulo);
             tv_detalle = (TextView) rootlayout.findViewById(R.id.tv_desc);
             btn_volver = (Button) rootlayout.findViewById(R.id.btn_volver);
+            btn_borrar = (Button) rootlayout.findViewById(R.id.btn_borrar);
             tv_titulo.setText(laNoticia.getNombre());
             tv_detalle.setText(laNoticia.getDescripcion());
         }

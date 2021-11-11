@@ -17,6 +17,12 @@ public class UsuariosService {
     public static final String KEY_USUARIOS_FECHA= "FechaNacimiento";
     public static final String KEY_USUARIOS_GENERO = "Genero";
 
+    private final DbHelper _helper;
+
+    public UsuariosService(Context c){
+        _helper = new DbHelper(c);
+    }
+
 
     public static final String CREAR_TABLA = "CREATE TABLE " + NOMBRE_TABLA +
             "(" +
@@ -39,12 +45,11 @@ public class UsuariosService {
         return values;
     }
 
-    public static Usuario findUser(Context c, String nombre, String contra){
-        DbHelper helper = new DbHelper(c);
+    public Usuario findUser(String nombre, String contra){
         Usuario aux = null;
         SQLiteDatabase db;
         Cursor cursor;
-         db = helper.getReadableDatabase();
+         db = _helper.getReadableDatabase();
          cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE Nombre = ? AND Password = ?",NOMBRE_TABLA),
                  new String[]{nombre, contra});
          if (cursor!= null) aux = cursorToEntity(cursor);

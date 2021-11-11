@@ -7,22 +7,63 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import com.marto.tp_sqlite_polshu.Helpers.NoticiasService;
+import com.marto.tp_sqlite_polshu.model.Noticia;
+
+import java.util.ArrayList;
 
 
-public class ListadoFragment extends BaseFragment {
+public class ListadoFragment extends BaseFragment implements BasicMethods{
         View rootlayout;
         MainActivity main;
+        ListView lv_noticias;
+        ArrayList<Noticia> noticias = new ArrayList<>();
+        NoticiasService service;
 
 
     public ListadoFragment() {
         // Required empty public constructor
     }
 
+    @Override
     public void inicializar(){
         main = (MainActivity) getActivity();
         if(rootlayout != null){
-
+            service =   new NoticiasService(main);
+            noticias = service.getALl();
+            lv_noticias = (ListView) rootlayout.findViewById(R.id.gone); // falta xml
+            llenarListView();
         }
+    }
+
+    private void llenarListView(){
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(main, android.R.layout.simple_list_item_1,adaptarLista());
+        lv_noticias.setAdapter(adapter);
+    }
+
+    private ArrayList<String> adaptarLista(){
+        ArrayList<String> lista = new ArrayList<>();
+        if(noticias.size()> 0){
+            for (Noticia n:
+                    noticias) {
+                String autor = service.findAutor(n.getId());
+                String formato = String.format("Tiulo: %s autor: %s", n.getNombre(), autor);
+                lista.add(formato);
+            }
+        }
+        return lista;
+    }
+
+    @Override
+    public void setearListeners() {
+        lv_noticias.setOnItemClickListener((parent, view, position, id) -> {
+            main.llenarDetalle(noticias.get(position));
+            main.irADetalle();
+        });
     }
 
     @Override
@@ -31,6 +72,7 @@ public class ListadoFragment extends BaseFragment {
         // Inflate the layout for this fragment
        if(rootlayout == null)  rootlayout =  inflater.inflate(R.layout.fragment_listado, container, false);
        inicializar();
+       setearListeners();
        return rootlayout;
     }
 }
