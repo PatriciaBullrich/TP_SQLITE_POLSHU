@@ -15,6 +15,16 @@ public class Usuario {
         this.Genero = genero;
     }
 
+    public Usuario(int fecha, String nombre, String apellido,String contra ,boolean genero){
+        this.FechaNacimiento = fecha;
+        this.Nombre = nombre;
+        this.Contra = contra;
+        this.Apellido = apellido;
+        this.Genero = genero;
+    }
+
+
+
     public String getContra() {
         return Contra;
     }

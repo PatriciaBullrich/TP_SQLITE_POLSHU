@@ -26,17 +26,16 @@ public class UsuariosService {
 
     public static final String CREAR_TABLA = "CREATE TABLE " + NOMBRE_TABLA +
             "(" +
-            KEY_USUARIOS_ID + " INTEGER PRIMARY KEY," + // Define a primary key
-            KEY_USUARIOS_NOMBRE + " TEXT " +
-            KEY_USUARIOS_CONTRA + "TEXT" +
-            KEY_USUARIOS_APELLIDO + " TEXT" +
-            KEY_USUARIOS_FECHA +  "INTEGER" +
-            KEY_USUARIOS_GENERO + "INTEGER" +
+            KEY_USUARIOS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + // Define a primary key
+            KEY_USUARIOS_NOMBRE + " TEXT ," +
+            KEY_USUARIOS_CONTRA + " TEXT ," +
+            KEY_USUARIOS_APELLIDO + " TEXT ," +
+            KEY_USUARIOS_FECHA +  " INTEGER ," +
+            KEY_USUARIOS_GENERO + " INTEGER " +
             ")";
 
     public static ContentValues insertarUsuario (Usuario user){
         ContentValues values = new ContentValues();
-        values.put(KEY_USUARIOS_ID, user.getId());
         values.put(KEY_USUARIOS_CONTRA,user.getContra());
         values.put(KEY_USUARIOS_NOMBRE, user.getNombre());
         values.put(KEY_USUARIOS_APELLIDO, user.getApellido());
@@ -52,7 +51,9 @@ public class UsuariosService {
          db = _helper.getReadableDatabase();
          cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE Nombre = ? AND Password = ?",NOMBRE_TABLA),
                  new String[]{nombre, contra});
-         if (cursor!= null) aux = cursorToEntity(cursor);
+         if (cursor!= null){
+             while (cursor.moveToNext()) aux = cursorToEntity(cursor);
+         }
          else CustomLog.log("el cursor llego nulo");
         return aux;
     }

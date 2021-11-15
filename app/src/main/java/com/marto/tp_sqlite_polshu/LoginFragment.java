@@ -54,9 +54,7 @@ public class LoginFragment extends BaseFragment {
         }
     };
 
-    public void silentLogin(String nombre, String contra){
-        Session.currentUser = service.findUser(nombre, contra);
-    }
+
     private boolean esFormValido(){
         if(etUserpassword.getText().toString().trim().equals("") && etUsername.getText().toString().trim().equals("")){
             AlertHelper.mostrarAlertaError(getContext(), "Por favor, el usuario y contraseña deben estar llenos");

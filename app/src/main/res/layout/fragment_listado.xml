@@ -8,11 +8,12 @@
 
     <ListView
         android:layout_width="316dp"
-        android:layout_height="601dp"
+        android:layout_height="500dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/textView"
         app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        android:id="@+id/lv_noticias"/>
 
     <TextView
         android:id="@+id/textView"
@@ -24,4 +25,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_noticia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/lv_noticias"
+        app:layout_constraintStart_toStartOf="@+id/lv_noticias"
+        app:layout_constraintTop_toBottomOf="@+id/lv_noticias"
+        android:text="Nueva noticia" />
 </androidx.constraintlayout.widget.ConstraintLayout>

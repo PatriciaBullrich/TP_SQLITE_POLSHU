@@ -39,25 +39,25 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(NoticiasService.CREAR_TABLA);
         // insertamos algnos registros
         Usuario[] usuarios = new Usuario[5];
-        Noticia[] noticias = new Noticia[5];
-        usuarios[0] = new Usuario(0, 20010811,"Jorge","Nitales","contra", true);
-        usuarios[1] = new Usuario(1, 20010811,"Martin","Schifer","contra", true);
-        usuarios[2] = new Usuario(2, 19990618,"Martina","yiffer","contra",  false);
-        usuarios[3] = new Usuario(3, 20010811,"Patricia","Bullrich","contra",  false);
-        usuarios[4] = new Usuario(4, 20010811,"Polshu","Polsheta","contra",  true);
+        Noticia[] noticias = new Noticia[3];
+        usuarios[0] = new Usuario(20010811,"Jorge","Nitales","contra", true);
+        usuarios[1] = new Usuario(20010811,"Martin","Schifer","contra", true);
+        usuarios[2] = new Usuario(19990618,"Martina","yiffer","contra",  false);
+        usuarios[3] = new Usuario(20010811,"Patricia","Bullrich","contra",  false);
+        usuarios[4] = new Usuario(20010811,"Polshu","Polsheta","contra",  true);
 
-        noticias[0] = new Noticia(0,0,"Aguante el comunismo", "el comunismo es muy bueno!!!", 20210505);
-        noticias[0] = new Noticia(1,1,"Maneul martinez nuevo modeloo", "potencial miss universo", 20210506);
-        noticias[0] = new Noticia(2,1,"Doge coin es revolucionario", "Compren todos Doge ya!!!", 20210507);
+        noticias[0] = new Noticia(2,"Aguante el comunismo", "el comunismo es muy bueno!!!", 20210505);
+        noticias[1] = new Noticia(1,"Manuel martinez nuevo modeloo", "potencial miss universo", 20210506);
+        noticias[2] = new Noticia(3,"Doge coin es revolucionario", "Compren todos Doge ya!!!", 20210507);
 
         for (Usuario u:
              usuarios) {
-            insertarUsuario(this.getWritableDatabase(), u);
+            insertarUsuario(db, u);
         }
 
         for (Noticia n:
                 noticias) {
-            insertarNoticia(this.getWritableDatabase(), n);
+            insertarNoticia(db, n);
         }
         CustomLog.log("base de datos creada");
     }
@@ -76,11 +76,16 @@ public class DbHelper extends SQLiteOpenHelper {
                 //hacer algo
                 break;
             case 2:
-                db.execSQL("DROP TABLE IF EXISTS " +UsuariosService.NOMBRE_TABLA );
                 db.execSQL("DROP TABLE IF EXISTS " +NoticiasService.NOMBRE_TABLA );
+                db.execSQL("DROP TABLE IF EXISTS " +UsuariosService.NOMBRE_TABLA );
                 CustomLog.log("borre tablas viejas");
                 onCreate(db);
                 break;
         }
+
+    }
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion , int newVersion){
+        db.setVersion(oldVersion);
     }
 }

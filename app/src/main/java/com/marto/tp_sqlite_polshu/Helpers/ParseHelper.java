@@ -17,4 +17,9 @@ public class ParseHelper {
         }
         return null;
     }
+
+    public static int dateToInteger(Date d){
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        return Integer.parseInt(format.format(d));
+    }
 }

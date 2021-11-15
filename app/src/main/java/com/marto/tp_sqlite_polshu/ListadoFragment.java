@@ -41,8 +41,8 @@ public class ListadoFragment extends BaseFragment implements BasicMethods{
         if(rootlayout != null){
             service =   new NoticiasService(main);
             noticias = service.getALl();
-            lv_noticias = (ListView) rootlayout.findViewById(R.id.gone); // falta xml
-            btn_noticia = (Button) rootlayout.findViewById(R.id.gone); // falta xml
+            lv_noticias = (ListView) rootlayout.findViewById(R.id.lv_noticias); // falta xml
+            btn_noticia = (Button) rootlayout.findViewById(R.id.btn_noticia); // falta xml
             llenarListView();
         }
     }
@@ -58,8 +58,9 @@ public class ListadoFragment extends BaseFragment implements BasicMethods{
         if(noticias.size()> 0){
             for (Noticia n:
                     noticias) {
-                String autor = service.findAutor(n.getId());
-                String formato = String.format("Tiulo: %s autor: %s + fecha: %s", n.getNombre(), autor, ParseHelper.integerToDate(n.getFecha()));
+                String autor = service.findAutor(n.getIdUsuario());
+                CustomLog.log(autor);
+                String formato = String.format("Tiulo: %s \n autor: %s \n fecha: %s", n.getNombre(), autor, ParseHelper.integerToDate(n.getFecha()));
                 lista.add(formato);
             }
         }

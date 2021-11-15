@@ -27,7 +27,6 @@ public class NoticiasService {
 
     public static ContentValues insertarNoticia (Noticia n){
         ContentValues values = new ContentValues();
-        if(n.getId() >=0) values.put(KEY_NOTICIAS_ID, n.getId());
         values.put(KEY_NOTICIAS_NOMBRE, n.getNombre());
         values.put(KEY_NOTICIAS_DESC, n.getDescripcion());
         values.put(KEY_NOTICIAS_FECHA, n.getFecha());
@@ -38,10 +37,10 @@ public class NoticiasService {
     public static final String CREAR_TABLA = "CREATE TABLE " + NOMBRE_TABLA +
             "(" +
             KEY_NOTICIAS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + // Define a primary key
-            KEY_NOTICIAS_NOMBRE + " TEXT " +
-            KEY_NOTICIAS_DESC + " TEXT" +
-            KEY_NOTICIAS_FECHA +  "INTEGER" +
-            FOREIGN_KEY_NOTICIAS_IDusuario + "INTEGER REFERENCES" + UsuariosService.NOMBRE_TABLA + "," +
+            KEY_NOTICIAS_NOMBRE + " TEXT ," +
+            KEY_NOTICIAS_DESC + " TEXT ," +
+            KEY_NOTICIAS_FECHA +  " INTEGER ," +
+            FOREIGN_KEY_NOTICIAS_IDusuario + " INTEGER REFERENCES " + UsuariosService.NOMBRE_TABLA +
         ")";
 
     public ArrayList<Noticia> getALl(){
@@ -54,6 +53,7 @@ public class NoticiasService {
             while (cursor.moveToNext()) {
                 lista.add(cursorToEntity(cursor));
             }
+            cursor.close();
         }
         return lista;
     }
@@ -66,7 +66,7 @@ public class NoticiasService {
         db = _helper.getReadableDatabase();
         c = db.rawQuery("SELECT Usuarios.nombre AS autor FROM Noticias INNER JOIN Usuarios ON Noticias.IdUsuario = Usuarios.Id WHERE Noticias.IDusuario=? ", new String[]{String.valueOf(id)});
         if(c != null){
-            while (c.moveToFirst()){
+            while (c.moveToNext()){
                 autor = c.getString(c.getColumnIndex("autor"));
             }
             c.close();
@@ -83,7 +83,6 @@ public class NoticiasService {
                     c.getString(c.getColumnIndex(KEY_NOTICIAS_NOMBRE)),
                     c.getString(c.getColumnIndex(KEY_NOTICIAS_DESC)),
                     c.getInt(c.getColumnIndex(KEY_NOTICIAS_FECHA)));
-                    c.close();
         }
        return  aux;
     }
