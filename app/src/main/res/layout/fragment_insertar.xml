@@ -48,8 +48,7 @@
         android:text="LOG IN"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/etUserpassword"
-        app:layout_constraintStart_toStartOf="@+id/etUserpassword"
-        app:layout_constraintTop_toBottomOf="@+id/etUserpassword"
-        app:layout_constraintVertical_bias="0.398" />
+        app:layout_constraintEnd_toEndOf="@+id/etTitulo"
+        app:layout_constraintStart_toStartOf="@+id/etTitulo"
+        app:layout_constraintTop_toBottomOf="@+id/etTitulo" />
 </androidx.constraintlayout.widget.ConstraintLayout>
